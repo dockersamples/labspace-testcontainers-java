@@ -3,9 +3,17 @@ description: |
   A basic template for creating a Labspace, including all of the boilerplate needed to write and publish a Labspace.
 
 sections:
-  - title: Introduction
+  - title: Getting Started
     contentPath: .labspace/01-introduction.md
-  - title: Main Content 1
-    contentPath: .labspace/02-main-content.md
-  - title: Conclusion
-    contentPath: .labspace/03-conclusion.md
+  - title: Exploring the app
+    contentPath: .labspace/02-exploring-the-app.md
+  - title: Adding some tests
+    contentPath: .labspace/03-adding-some-tests.md
+  - title: Your first Testcontainers integration
+    contentPath: .labspace/04-your-first-testcontainers-integration.md
+  - title: Dude r u 200 OK?
+    contentPath: .labspace/05-dude-r-u-200-ok.md
+  - title: Adding Redis to the mix
+    contentPath: .labspace/06-adding-redis.md
+  - title: Testing the API
+    contentPath: .labspace/07-test-the-api.md

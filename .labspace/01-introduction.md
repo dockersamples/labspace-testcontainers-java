@@ -1,21 +1,26 @@
-# Introduction
+# Step 1: Getting Started
 
-👋 Welcome to the **Labspace starter** lab! During this lab, you will learn to do the following:
+## Clone the following project from GitHub:
+```bash
+git clone https://github.com/testcontainers/workshop.git
+```
 
-- Learning Objective 1
-- Learning Objective 2
-- Learning Objective 3
-- Learning Objective 4
+## Build the project to download the dependencies
+Switch to the workshop folder:
+```bash
+cd workshop
+```
+and build the project with Maven:
+```bash
+./mvnw verify
+```
 
+## \(optionally\) Pull the required images before doing the workshop
 
-## 🙋 What is a Labspace again?
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis lacinia nisi sit amet auctor accumsan. Maecenas suscipit, libero quis ullamcorper pulvinar, dolor nisl vehicula orci, vel egestas arcu nibh eget enim. 
-
-Suspendisse potenti. Pellentesque eleifend eget ante eu egestas. 
-
-Nunc sit amet dapibus erat. Aliquam diam arcu, fringilla hendrerit metus sed, pellentesque fringilla lacus. 
-
-Nulla ornare nulla risus. Curabitur ut ipsum euismod, accumsan lorem eu, pretium lorem. Fusce imperdiet fermentum hendrerit.
-
-
+This might be helpful if the internet connection is somewhat slow.
+```bash
+docker pull postgres:16-alpine
+docker pull redis:7-alpine
+docker pull openjdk:8-jre-alpine
+docker pull confluentinc/cp-kafka:7.5.0
+```
