@@ -1,6 +1,6 @@
-title: Labspace starter
+title: Testcontainers Java
 description: |
-  A basic template for creating a Labspace, including all of the boilerplate needed to write and publish a Labspace.
+  An introduction to using Testcontainers with a Java application.
 
 sections:
   - title: Getting Started
