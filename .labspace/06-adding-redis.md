@@ -10,7 +10,7 @@ Luckily, there are the `.start()`/`.stop()` methods of `GenericContainer` to sta
 
 Just update the `AbstractIntegrationTest` with the following code:
 
-```java no-run-button no-copy-button
+```java no-run-button
 static final GenericContainer redis = new GenericContainer("redis:7-alpine")
                                             .withExposedPorts(6379);
 

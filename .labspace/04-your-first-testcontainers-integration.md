@@ -85,7 +85,7 @@ It did some pre-flight checks as well to ensure that you have a valid environmen
 Changing the PostgreSQL version is as simple as replacing `16-alpine` with, for example, `17-alpine`.
 Try it, but don't forget that it will download the new image from the internet, if it's not already present on your computer.
 
-```plaintext save-as=workshop/src/test/java/com/example/demo/AbstractIntegrationTest.java
+```java save-as=workshop/src/test/java/com/example/demo/AbstractIntegrationTest.java
 package com.example.demo;
 
 import org.springframework.boot.test.context.SpringBootTest;
@@ -96,4 +96,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 public class AbstractIntegrationTest {
 
 }
+```
+```bash
+./mvnw clean test
 ```

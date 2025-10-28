@@ -7,7 +7,7 @@ But before we write our first test, let's create an abstract test class for the 
 
 Add `AbstractIntegrationTest` class to `src/test/java` sourceset. 
 It will be an abstract class with standard Spring Boot's testing framework annotations on it:
-```plaintext save-as=workshop/src/test/java/com/example/demo/AbstractIntegrationTest.java
+```java save-as=workshop/src/test/java/com/example/demo/AbstractIntegrationTest.java
 package com.example.demo;
 
 import org.springframework.boot.test.context.SpringBootTest;
