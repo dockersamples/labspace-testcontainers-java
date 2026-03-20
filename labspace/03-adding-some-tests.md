@@ -9,7 +9,7 @@ Add `AbstractIntegrationTest` class to `src/test/java` sourceset.
 
 It will be an abstract class with standard Spring Boot's testing framework annotations on it:
 
-```java save-as=workshop/src/test/java/com/example/demo/AbstractIntegrationTest.java
+```java save-as=src/test/java/com/example/demo/AbstractIntegrationTest.java
 package com.example.demo;
 
 import org.springframework.boot.test.context.SpringBootTest;
@@ -25,7 +25,7 @@ public class AbstractIntegrationTest {
 Now we need to test that the context starts.  
 Add `DemoApplicationTest`, extend it from your base class `AbstractIntegrationTest` and add a dummy test:
 
-```java save-as=workshop/src/test/java/com/example/demo/DemoApplicationTest.java
+```java save-as=src/test/java/com/example/demo/DemoApplicationTest.java
 package com.example.demo;
 
 import org.junit.jupiter.api.Test;
@@ -53,7 +53,7 @@ The Spring context starts. However, we need to populate the database with some d
 
 Let's add a `schema.sql` file with the following content:
 
-```sql save-as=workshop/src/test/resources/schema.sql
+```sql save-as=src/test/resources/schema.sql
 CREATE TABLE IF NOT EXISTS talks(
   id    VARCHAR(64)  NOT NULL,
   title VARCHAR(255) NOT NULL,
@@ -79,7 +79,7 @@ Now run the test again.
 
 Oh no, it fails!
 
-```plaintext
+```plaintext no-copy-button
 ...
 Caused by: org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "INSERT INTO TALKS (ID, TITLE) VALUES ('testcontainers-integration-testing', 'Modern Integration Testing with Testcontainers') ON[*] CONFLICT DO NOTHING";
 ...

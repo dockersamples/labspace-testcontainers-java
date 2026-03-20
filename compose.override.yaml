@@ -10,6 +10,9 @@ services:
     configs:
       - source: docker-java-properties
         target: /home/coder/.docker-java.properties
+      - source: clone-repo-script
+        target: /entrypoint.d/clone-repo.sh
+        mode: 0755
 
   #   # Override the default ports to publish additional ports you may need
   #   # More details - https://github.com/dockersamples/labspace-infra/blob/main/docs/configuration.md#overriding-the-workspace-ports
@@ -27,3 +30,15 @@ configs:
   docker-java-properties:
     content: |
       api.version=1.48
+  clone-repo-script:
+    content: |
+      #!/bin/bash
+      set -e
+
+      if [ ! -d "/home/coder/project/.git" ]; then
+        find "/home/coder/project" -type f -name '.*' -exec rm '{}' \;
+        git clone https://github.com/testcontainers/workshop.git /home/coder/project
+        rm /home/coder/project/step-*.md
+      else
+        echo "Repository already cloned, skipping."
+      fi

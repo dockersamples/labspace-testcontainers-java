@@ -2,7 +2,7 @@
 
 Now let's create a test for our API which will verify the business logic.
 
-```java save-as=workshop/src/test/java/com/example/demo/RatingsControllerTest.java
+```java save-as=src/test/java/com/example/demo/RatingsControllerTest.java
 package com.example.demo;
 
 import com.example.demo.model.Rating;
@@ -86,7 +86,7 @@ There is a [Testcontainers Kafka module](https://java.testcontainers.org/modules
 Just add it the same way as you added Redis and set the `spring.kafka.bootstrap-servers` system property.
 The full `AbstractIntegrationTest` class implementation will look like:
 
-```java save-as=workshop/src/test/java/com/example/demo/AbstractIntegrationTest.java
+```java save-as=src/test/java/com/example/demo/AbstractIntegrationTest.java
 package com.example.demo;
 
 import io.restassured.RestAssured;

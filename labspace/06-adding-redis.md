@@ -8,23 +8,27 @@ The integration between the tests code and Testcontainers is straightforward.
 Testcontainers comes with first class support for JUnit, but in our app we want to have a single Redis instance shared between **all** tests. 
 Luckily, there are the `.start()`/`.stop()` methods of `GenericContainer` to start or stop it manually.
 
-Update the `AbstractIntegrationTest` with the following code:
+1. Update the :fileLink[`AbstractIntegrationTest`]{path="src/test/java/com/example/demo/AbstractIntegrationTest.java"} to create a redis container:
 
-```java no-run-button
-static final GenericContainer redis = new GenericContainer("redis:7-alpine")
-                                            .withExposedPorts(6379);
+    ```java no-run-button
+    static final GenericContainer redis = new GenericContainer("redis:7-alpine")
+                                                .withExposedPorts(6379);
+    ```
 
-@DynamicPropertySource
-public static void configureRedis(DynamicPropertyRegistry registry) {
-  redis.start();
-  registry.add("spring.data.redis.host", redis::getHost);
-  registry.add("spring.data.redis.port", redis::getFirstMappedPort);
-}
-```
+2. In that same class, add a method annotated with `@DynamicPropertySource` to provide the properties needed to connect to the Redis container:
 
-The full `AbstractIntegrationTest` class implementation will look like:
+    ```java
+    @DynamicPropertySource
+    public static void configureRedis(DynamicPropertyRegistry registry) {
+        redis.start();
+        registry.add("spring.data.redis.host", redis::getHost);
+        registry.add("spring.data.redis.port", redis::getFirstMappedPort);
+    }
+    ```
 
-```java save-as=workshop/src/test/java/com/example/demo/AbstractIntegrationTest.java
+The full `AbstractIntegrationTest` class implementation should now look like the following:
+
+```java save-as=src/test/java/com/example/demo/AbstractIntegrationTest.java
 package com.example.demo;
 
 import io.restassured.RestAssured;
@@ -78,4 +82,21 @@ Run the tests, now they should all pass.
 
 ```bash
 ./mvnw clean test
+```
+
+If successful, you should see output similar to the following:
+
+```console no-copy-button no-run-button
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 6.688 s - in com.example.demo.DemoApplicationTest
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  8.092 s
+[INFO] Finished at: 2026-03-20T19:59:19Z
+[INFO] ------------------------------------------------------------------------
 ```

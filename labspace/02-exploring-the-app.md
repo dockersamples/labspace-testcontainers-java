@@ -10,23 +10,23 @@ When a rating is submitted, we must verify that the talk for the given ID is pre
 
 Our database of choice is PostgreSQL, accessed with Spring JDBC.
 
-Check :fileLink[TalksRepository]{path="workshop/src/main/java/com/example/demo/repository/TalksRepository.java"}.
+Check :fileLink[TalksRepository]{path="src/main/java/com/example/demo/repository/TalksRepository.java"}.
 
 ### Redis
 
 We store the ratings in Redis database with Spring Data Redis.
 
-Check :fileLink[RatingsRepository]{path="workshop/src/main/java/com/example/demo/repository/RatingsRepository.java"}.
+Check :fileLink[RatingsRepository]{path="src/main/java/com/example/demo/repository/RatingsRepository.java"}.
 
 ### Kafka
 
 We use ES/CQRS to materialize the events into the state. Kafka acts as a broker and we use Spring Kafka.
 
-Check :fileLink[RatingsListener]{path="workshop/src/main/java/com/example/demo/streams/RatingsListener.java"}.
+Check :fileLink[RatingsListener]{path="src/main/java/com/example/demo/streams/RatingsListener.java"}.
 
 ## API
 
-The API is a Spring Web REST controller :fileLink[RatingsController]{path="workshop/src/main/java/com/example/demo/api/RatingsController.java"} and exposes two endpoints:
+The API is a Spring Web REST controller :fileLink[RatingsController]{path="src/main/java/com/example/demo/api/RatingsController.java"} and exposes two endpoints:
 
 * `POST /ratings { "talkId": ?, "value": 1-5 }` to add a rating for a talk
 * `GET /ratings?talkId=?` to get the histogram of ratings of the given talk

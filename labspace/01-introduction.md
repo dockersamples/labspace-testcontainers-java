@@ -10,22 +10,20 @@ By the end, you will have learned the following:
 
 ## Setup
 
-1. Clone the workshop repository into the lab environment:
-
-    ```bash
-    git clone https://github.com/testcontainers/workshop.git
-    ```
-
-2. Build the project to download the dependencies
-
-    Switch to the workshop folder:
-
-    ```bash
-    cd workshop
-    ```
-
-3. Build the project with Maven:
+1. Run a build to download all of the dependencies and validate the application builds successfully:
 
     ```bash
     ./mvnw verify
+    ```
+
+    If successful, you should see output similar to the following:
+
+    ```console no-copy-button no-run-button
+    [INFO] The original artifact has been renamed to /home/coder/project/target/demo-0.0.1-SNAPSHOT.jar.original
+    [INFO] ------------------------------------------------------------------------
+    [INFO] BUILD SUCCESS
+    [INFO] ------------------------------------------------------------------------
+    [INFO] Total time:  27.838 s
+    [INFO] Finished at: 2026-03-20T19:41:38Z
+    [INFO] ------------------------------------------------------------------------
     ```

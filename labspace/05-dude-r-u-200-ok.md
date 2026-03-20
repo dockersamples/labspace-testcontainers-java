@@ -3,16 +3,17 @@
 One of the great features of Spring Boot is the Actuator and its health endpoint. 
 It gives you an overview how healthy your app is.
 
-The context starts, but what's about the health of the app?
+The context starts, but what about the health of the app? This endpoint can also be used in a test to quickly validate the application starts up completely.
 
 ## Configure Rest Assured
 
 To check the health endpoint of our app, we will use the [RestAssured](http://rest-assured.io/) library.
 
 However, before using it, we first need to configure it. 
-Update your abstract test class with `setUpAbstractIntegrationTest` method since we will share it between all tests:
 
-```java save-as=workshop/src/test/java/com/example/demo/AbstractIntegrationTest.java
+1. Update your abstract test class with `setUpAbstractIntegrationTest` method since we will share it between all tests:
+
+```java save-as=src/test/java/com/example/demo/AbstractIntegrationTest.java
 package com.example.demo;
 
 import io.restassured.RestAssured;
@@ -55,7 +56,7 @@ Now let's check if the app is actually healthy.
 
 1. Add the `healthy` test implementation in the `DemoApplicationTest` class:
 
-    ```java save-as=workshop/src/test/java/com/example/demo/DemoApplicationTest.java
+    ```java save-as=src/test/java/com/example/demo/DemoApplicationTest.java
     package com.example.demo;
     
     import io.restassured.filter.log.LogDetail;
@@ -81,7 +82,7 @@ Now let's check if the app is actually healthy.
     ./mvnw clean test
     ```
 
-    Oh ow! it fails:
+    Oh no! It fails:
 
     ```text
     ...
