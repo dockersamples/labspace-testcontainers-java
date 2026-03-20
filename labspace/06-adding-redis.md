@@ -8,7 +8,7 @@ The integration between the tests code and Testcontainers is straightforward.
 Testcontainers comes with first class support for JUnit, but in our app we want to have a single Redis instance shared between **all** tests. 
 Luckily, there are the `.start()`/`.stop()` methods of `GenericContainer` to start or stop it manually.
 
-Just update the `AbstractIntegrationTest` with the following code:
+Update the `AbstractIntegrationTest` with the following code:
 
 ```java no-run-button
 static final GenericContainer redis = new GenericContainer("redis:7-alpine")
@@ -21,6 +21,7 @@ public static void configureRedis(DynamicPropertyRegistry registry) {
   registry.add("spring.data.redis.port", redis::getFirstMappedPort);
 }
 ```
+
 The full `AbstractIntegrationTest` class implementation will look like:
 
 ```java save-as=workshop/src/test/java/com/example/demo/AbstractIntegrationTest.java
@@ -74,6 +75,7 @@ public class AbstractIntegrationTest {
 Simple and beautiful, huh?
 
 Run the tests, now they should all pass.
+
 ```bash
 ./mvnw clean test
 ```

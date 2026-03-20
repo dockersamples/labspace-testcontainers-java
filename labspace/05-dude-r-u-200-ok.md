@@ -52,62 +52,64 @@ Here we ask Spring Boot to inject the random port it received at the start of th
 ## Call the endpoint
 
 Now let's check if the app is actually healthy.
-Add the `healthy` test implementationn in the `DemoApplicationTest` class:
 
-```java save-as=workshop/src/test/java/com/example/demo/DemoApplicationTest.java
-package com.example.demo;
+1. Add the `healthy` test implementation in the `DemoApplicationTest` class:
 
-import io.restassured.filter.log.LogDetail;
-import org.junit.jupiter.api.Test;
-import static io.restassured.RestAssured.given;
-
-public class DemoApplicationTest extends AbstractIntegrationTest{
-    @Test
-    void healthy() {
-        given(requestSpecification)
-                .when()
-                .get("/actuator/health")
-                .then()
-                .statusCode(200)
-                .log().ifValidationFails(LogDetail.ALL);
+    ```java save-as=workshop/src/test/java/com/example/demo/DemoApplicationTest.java
+    package com.example.demo;
+    
+    import io.restassured.filter.log.LogDetail;
+    import org.junit.jupiter.api.Test;
+    import static io.restassured.RestAssured.given;
+    
+    public class DemoApplicationTest extends AbstractIntegrationTest{
+        @Test
+        void healthy() {
+            given(requestSpecification)
+                    .when()
+                    .get("/actuator/health")
+                    .then()
+                    .statusCode(200)
+                    .log().ifValidationFails(LogDetail.ALL);
+        }
     }
-}
-```
+    ```
 
-Now let's run the test again: 
-```bash
-./mvnw clean test
-```
+2. Run the test again: 
 
-Oh ow! it fails:
+    ```bash
+    ./mvnw clean test
+    ```
 
-```text
-...
-HTTP/1.1 503 Service Unavailable
-transfer-encoding: chunked
-Content-Type: application/vnd.spring-boot.actuator.v2+json;charset=UTF-8
+    Oh ow! it fails:
 
-{
-    "status": "DOWN",
-    "details": {
-        "diskSpace": { ... },
-        "redis": {
-            "status": "DOWN",
-            "details": {
-                "error": "org.springframework.data.redis.RedisConnectionFailureException: Unable to connect to Redis; nested exception is io.lettuce.core.RedisConnectionException: Unable to connect to localhost:6379"
-            }
-        },
-        "db": {
-            "status": "UP",
-            "details": {
-                "database": "PostgreSQL",
-                "hello": 1
+    ```text
+    ...
+    HTTP/1.1 503 Service Unavailable
+    transfer-encoding: chunked
+    Content-Type: application/vnd.spring-boot.actuator.v2+json;charset=UTF-8
+
+    {
+        "status": "DOWN",
+        "details": {
+            "diskSpace": { ... },
+            "redis": {
+                "status": "DOWN",
+                "details": {
+                    "error": "org.springframework.data.redis.RedisConnectionFailureException: Unable to connect to Redis; nested exception is io.lettuce.core.RedisConnectionException: Unable to connect to localhost:6379"
+                }
+            },
+            "db": {
+                "status": "UP",
+                "details": {
+                    "database": "PostgreSQL",
+                    "hello": 1
+                }
             }
         }
     }
-}
-... 
-Expected status code <200> but was <503>.
-```
+    ... 
+    Expected status code <200> but was <503>.
+    ```
 
-It seems that it couldn't find Redis and there is no autoconfigurable option for it.
+It seems that it couldn't find Redis and there is no auto-configurable option for it.

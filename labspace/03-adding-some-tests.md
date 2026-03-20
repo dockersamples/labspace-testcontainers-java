@@ -5,8 +5,10 @@ But before we write our first test, let's create an abstract test class for the 
 
 ## Abstract class
 
-Add `AbstractIntegrationTest` class to `src/test/java` sourceset. 
+Add `AbstractIntegrationTest` class to `src/test/java` sourceset.
+
 It will be an abstract class with standard Spring Boot's testing framework annotations on it:
+
 ```java save-as=workshop/src/test/java/com/example/demo/AbstractIntegrationTest.java
 package com.example.demo;
 
@@ -36,18 +38,21 @@ public class DemoApplicationTest extends AbstractIntegrationTest{
 ```
 
 Run it and verify that the application starts and the test passes.
+
 ```bash
 ./mvnw clean test
 ```
+
 Spring will detect H2 on the classpath and use it as an embedded DB.
 
 This is already a useful smoke test since it ensures, that Spring Boot is able to initialize the application context successfully.
 
 ## Populate the database
 
-The context starts. 
-However, we need to populate the database with some data before we can write the tests.
+The Spring context starts. However, we need to populate the database with some data before we can write the tests.
+
 Let's add a `schema.sql` file with the following content:
+
 ```sql save-as=workshop/src/test/resources/schema.sql
 CREATE TABLE IF NOT EXISTS talks(
   id    VARCHAR(64)  NOT NULL,
@@ -67,9 +72,11 @@ INSERT
 ```
 
 Now run the test again. 
+
 ```bash
 ./mvnw clean test
 ```
+
 Oh no, it fails!
 
 ```plaintext

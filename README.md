@@ -1,48 +1,52 @@
-# Labspace starter
+# Labspace - Introduction to Testcontainers - Java
 
-This repository is intended to server as a template to help bootstrap a new Labspace.
+Containers can be used for more than simply running your application. With Testcontainers, you can use containers to easily start the services needed by your application.
 
-## Instructions
+In this Labspace, you'll learn how to use Testcontainers in a Spring-based application.
 
-1. Create a new repository using this repo as the template ([docs here](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template)).
+## Learning objectives
 
-    **NOTE:** After creating the repo, a GHA workflow will run to do some additional bootstrapping. The bootstrapping workflow file will be removed during bootstrapping.
+By the end of this Labspace, you will have learned the following:
 
-2. Clone your newly created repo to your local machine
+- Write end-to-end API tests using real services instead of mocks
+- How to autowire Spring config to use containerized databases
+- How to use GenericContainer to provide additional services and wire them with `@DynamicPropertySource`
 
-3. Start the local development mode:
+## Launch the Labspace
+
+To launch the Labspace, run the following command:
+
+```bash
+docker compose -f oci://dockersamples/labspace-testcontainers-java up -d
+```
+
+And then open your browser to http://localhost:3030.
+
+### Using the Docker Desktop extension
+
+If you have the Labspace extension installed (`docker extension install dockersamples/labspace-extension` if not), you can also [click this link](https://open.docker.com/dashboard/extension-tab?extensionId=dockersamples/labspace-extension&location=dockersamples/labspace-testcontainers-javaimages&title=Introduction%20to%20Testcontainers%20-%20Java) to launch the Labspace.
+
+
+## Contributing
+
+If you find something wrong or something that needs to be updated, feel free to submit a PR. If you want to make a larger change, feel free to fork the repo into your own repository.
+
+**Important note:** If you fork it, you will need to update the GHA workflow to point to your own Hub repo.
+
+1. Clone this repo
+
+2. Start the Labspace in content development mode:
 
     ```bash
     # On Mac/Linux
-    CONTENT_PATH=$PWD docker compose -f oci://dockersamples/labspace-content-dev -f .labspace/compose.override.yaml up
+    CONTENT_PATH=$PWD docker compose up --watch
 
     # On Windows with PowerShell
-    $Env:CONTENT_PATH = (Get-Location).Path; docker compose -f oci://dockersamples/labspace-content-dev -f .labspace/compose.override.yaml up
+    $Env:CONTENT_PATH = (Get-Location).Path; docker compose up --watch
     ```
 
-4. Update the `labspace.yaml` with your Labspace's title and description
+3. Open the Labspace at http://localhost:3030.
 
-5. Write your Labspace! Being in dev mode, your changes should be visible in the interface without a restart. Feel free to edit either on your host machine or in the Labspace itself!
-
-    Add any supporting application files or resources directly into the Labspace. This repo will be cloned into the Labspace at startup.
+4. Make the necessary changes and validate they appear as you expect in the Labspace
 
     Be sure to check out the [docs](https://github.com/dockersamples/labspace-infra/tree/main/docs) for additional information and guidelines.
-
-
-
-### Setting up the deployment pipeline
-
-The template repo contains a workflow file to make it easy to publish your Labspace.
-
-1. Add GitHub Action Secrets in your new repo for the following:
-
-    - `DOCKERHUB_USERNAME` - the username to authenticate to Docker Hub with
-    - `DOCKERHUB_TOKEN` - a personal or organization access token to use for authentication
-
-2. In the `.github/workflows/publish-labspace.yaml.temp` file, update the `DOCKERHUB_REPO` with the name of the Docker Hub repo you want to publish to.
-
-3. Rename the workflow file to remove the `.temp` extension.
-
-    ```bash
-    mv .github/workflows/publish-labspace.yaml.temp .github/workflows/publish-labspace.yaml
-    ```

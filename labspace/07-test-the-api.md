@@ -69,7 +69,8 @@ public class RatingsControllerTest extends AbstractIntegrationTest {
 }
 ```
 
-Run it
+Run it:
+
 ```bash
 ./mvnw clean test
 ```
@@ -79,6 +80,7 @@ Test failed. Why?
 There is no Kafka!
 
 Running Kafka in Docker is easy with Testcontainers.
+
 There is a [Testcontainers Kafka module](https://java.testcontainers.org/modules/kafka/) providing integration with Kafka and the `KafkaContainer` abstraction for your code.
 
 Just add it the same way as you added Redis and set the `spring.kafka.bootstrap-servers` system property.
@@ -137,6 +139,7 @@ public class AbstractIntegrationTest {
 ```
 
 Run test one more time:
+
 ```bash
 ./mvnw clean test
 ```
@@ -144,7 +147,7 @@ Run test one more time:
 ## Hint 1:
 
 Some containers expose helper methods. Check if there is one on `KafkaContainer` which might help you.
-![KafkaContainer helpers](.labspace/images/kafka.png)
+![KafkaContainer helpers](images/kafka.png)
 
 
 ## Hint 2:
