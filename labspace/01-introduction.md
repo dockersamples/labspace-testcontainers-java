@@ -1,20 +1,31 @@
-# Step 1: Getting Started
+# Introduction
 
-## Clone the following project from GitHub:
-```bash
-git clone https://github.com/testcontainers/workshop.git
-```
+👋 Welcome to this Labspace focused on helping you learn how to use Testcontainers in a Spring-based application.
 
-## Build the project to download the dependencies
+By the end, you will have learned the following:
 
-Switch to the workshop folder:
+- Write end-to-end API tests using real services instead of mocks
+- How to autowire Spring config to use containerized databases
+- How to use GenericContainer to provide additional services and wire them with `@DynamicPropertySource`
 
-```bash
-cd workshop
-```
+## Setup
 
-and build the project with Maven:
+1. Clone the workshop repository into the lab environment:
 
-```bash
-./mvnw verify
-```
+    ```bash
+    git clone https://github.com/testcontainers/workshop.git
+    ```
+
+2. Build the project to download the dependencies
+
+    Switch to the workshop folder:
+
+    ```bash
+    cd workshop
+    ```
+
+3. Build the project with Maven:
+
+    ```bash
+    ./mvnw verify
+    ```
