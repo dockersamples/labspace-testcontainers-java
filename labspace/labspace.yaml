@@ -1,3 +1,8 @@
+metadata:
+  id: dockersamples/labspace-testcontainers-java
+  sourceRepo: github.com/dockersamples/labspace-testcontainers-java
+  contentVersion: abcd123 # To be replaced at publish time
+  
 title: Intro to Testcontainers - Java
 description: |
   An introduction to using Testcontainers with a Java application.
