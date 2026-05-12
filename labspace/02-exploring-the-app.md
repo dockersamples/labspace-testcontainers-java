@@ -6,27 +6,21 @@ The app is a simple microservice based on Spring Boot for rating conference talk
 
 ### SQL database with the talks
 
-When a rating is submitted, we must verify that the talk for the given ID is present in our database.
+When a rating is submitted, the app verifies the talk for the given ID is present in the database.
 
-Our database of choice is PostgreSQL, accessed with Spring JDBC.
-
-Check :fileLink[TalksRepository]{path="src/main/java/com/example/demo/repository/TalksRepository.java"}.
+The :fileLink[TalksRepository]{path="src/main/java/com/example/demo/repository/TalksRepository.java"} class is responsible for interacting with the PostgreSQL database, accessed with Spring JDBC.
 
 ### Redis
 
-We store the ratings in Redis database with Spring Data Redis.
-
-Check :fileLink[RatingsRepository]{path="src/main/java/com/example/demo/repository/RatingsRepository.java"}.
+The app stores the talk ratings in Redis database with Spring Data Redis, which is handled with the :fileLink[RatingsRepository]{path="src/main/java/com/example/demo/repository/RatingsRepository.java"} class.
 
 ### Kafka
 
-We use ES/CQRS to materialize the events into the state. Kafka acts as a broker and we use Spring Kafka.
-
-Check :fileLink[RatingsListener]{path="src/main/java/com/example/demo/streams/RatingsListener.java"}.
+The app uses ES/CQRS to materialize the events into the state, using Kafka acts as a broker and Spring Kafka to manage the connections. This is all handled in the :fileLink[RatingsListener]{path="src/main/java/com/example/demo/streams/RatingsListener.java"} class.
 
 ## API
 
-The API is a Spring Web REST controller :fileLink[RatingsController]{path="src/main/java/com/example/demo/api/RatingsController.java"} and exposes two endpoints:
+The app exposes an API with a Spring Web REST controller :fileLink[RatingsController]{path="src/main/java/com/example/demo/api/RatingsController.java"}. This controller exposes two endpoints:
 
-* `POST /ratings { "talkId": ?, "value": 1-5 }` to add a rating for a talk
-* `GET /ratings?talkId=?` to get the histogram of ratings of the given talk
+* `POST /ratings { "talkId": ?, "value": 1-5 }` - add a rating for a talk
+* `GET /ratings?talkId=?` - get the histogram of ratings of the given talk

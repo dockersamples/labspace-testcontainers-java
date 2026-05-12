@@ -16,6 +16,8 @@ By the end, you will have learned the following:
     ./mvnw verify
     ```
 
+    Note that it may take a few moments to download all of the Maven dependencies.
+
     If successful, you should see output similar to the following:
 
     ```console no-copy-button no-run-button
@@ -24,6 +26,6 @@ By the end, you will have learned the following:
     [INFO] BUILD SUCCESS
     [INFO] ------------------------------------------------------------------------
     [INFO] Total time:  27.838 s
-    [INFO] Finished at: 2026-03-20T19:41:38Z
+    [INFO] Finished at: 2026-05-12T15:41:38Z
     [INFO] ------------------------------------------------------------------------
     ```

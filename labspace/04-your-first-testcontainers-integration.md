@@ -1,16 +1,20 @@
 # Step 4: Your first Testcontainers integration
 
-From the Testcontainers website, we learn that there is a simple way of running different supported JDBC databases with Docker:  
-[https://www.testcontainers.org/usage/database\_containers.html](https://www.testcontainers.org/usage/database_containers.html)
+The Testcontainers framework provides an easy mechanism to run databases in tests using containers. In fact, there are [many JDBC-supported databases](https://java.testcontainers.org/modules/databases/jdbc/) with full support.
 
-An especially interesting part are JDBC-URL based containers:  
-[https://www.testcontainers.org/usage/database\_containers.html\#jdbc-url](https://www.testcontainers.org/usage/database_containers.html#jdbc-url)
+One feature of Testcontainers is the ability to use a custom JDBC URL scheme to automatically launch the appropriate database in a container. 
+
+For example, the following JDBC URL will automatically start a PostgreSQL database in a container:
+
+```properties
+jdbc:tc:postgresql:18.3:///databasename
+```
 
 It means that starting to use Testcontainers in our project \(once we add a dependency\) is as simple as changing a few properties in Spring Boot:
 
 ```java
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, properties = {
- "spring.datasource.url=jdbc:tc:postgresql:16-alpine://testcontainers/workshop"
+ "spring.datasource.url=jdbc:tc:postgresql:18-alpine://testcontainers/workshop"
 })
 public class ...
 ```
@@ -23,7 +27,7 @@ public class ...
     import org.springframework.boot.test.context.SpringBootTest;
 
     @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, properties = {
-            "spring.datasource.url=jdbc:tc:postgresql:16-alpine://testcontainers/workshop"
+            "spring.datasource.url=jdbc:tc:postgresql:18-alpine://testcontainers/workshop"
     })
     public class AbstractIntegrationTest {
 
@@ -33,7 +37,7 @@ public class ...
     If we split the magical JDBC url, we see:
 
     * `jdbc:tc:` - this part says that we should use Testcontainers as a JDBC provider
-    * `postgresql:16-alpine://` - we use a PostgreSQL database, and we select the correct PostgreSQL image from the Docker Hub as the image
+    * `postgresql:18-alpine://` - we use a PostgreSQL database, and we select the correct PostgreSQL image from Docker Hub as the image
     * `testcontainers/workshop` - the host name \(can be anything\) is `testcontainers` and the database name is `workshop`. Your choice!
 
 2. Run the tests with the following command:
@@ -55,7 +59,7 @@ public class ...
     [INFO] BUILD SUCCESS
     [INFO] ------------------------------------------------------------------------
     [INFO] Total time:  15.529 s
-    [INFO] Finished at: 2026-03-20T19:47:25Z
+    [INFO] Finished at: 2026-05-12T20:12:35Z
     [INFO] ------------------------------------------------------------------------
     ```
 
@@ -106,34 +110,39 @@ In these environments, Testcontainers Cloud can be used to spin up Testcontainer
     2026-03-20T21:36:57.521Z  INFO 77211 --- [           main] o.t.utility.RyukResourceReaper           : Ryuk started - will monitor and terminate Testcontainers containers on JVM exit
     2026-03-20T21:36:57.523Z  INFO 77211 --- [           main] org.testcontainers.DockerClientFactory   : Checking the system...
     2026-03-20T21:36:57.530Z  INFO 77211 --- [           main] org.testcontainers.DockerClientFactory   : ✔︎ Docker server version should be at least 1.6.0
-    2026-03-20T21:36:57.532Z  INFO 77211 --- [           main] tc.postgres:17-alpine                    : Creating container for image: postgres:17-alpine
-    2026-03-20T21:36:57.679Z  INFO 77211 --- [           main] tc.postgres:17-alpine                    : Container postgres:17-alpine is starting: ed1a75d921ab911896763cde925724777aa6cea00700aec567d6b9a293b1e297
-    2026-03-20T21:36:58.939Z  INFO 77211 --- [           main] tc.postgres:17-alpine                    : Container postgres:17-alpine started in PT1.406803125S
-    2026-03-20T21:36:58.943Z  INFO 77211 --- [           main] tc.postgres:17-alpine                    : Container is started (JDBC URL: jdbc:postgresql://127.0.0.1:32771/workshop?loggerLevel=OFF)
+    2026-03-20T21:36:57.532Z  INFO 77211 --- [           main] tc.postgres:18-alpine                    : Creating container for image: postgres:18-alpine
+    2026-03-20T21:36:57.679Z  INFO 77211 --- [           main] tc.postgres:18-alpine                    : Container postgres:18-alpine is starting: ed1a75d921ab911896763cde925724777aa6cea00700aec567d6b9a293b1e297
+    2026-03-20T21:36:58.939Z  INFO 77211 --- [           main] tc.postgres:18-alpine                    : Container postgres:18-alpine started in PT1.406803125S
+    2026-03-20T21:36:58.943Z  INFO 77211 --- [           main] tc.postgres:18-alpine                    : Container is started (JDBC URL: jdbc:postgresql://127.0.0.1:32771/workshop?loggerLevel=OFF)
     ```
 
 As you can see, Testcontainers quickly discovered your environment and connected to Docker. 
 
 It also performed some pre-flight checks to ensure the environment is valid.
 
-## Hint:
+## Trying other database versions
 
-Changing the PostgreSQL version is as simple as replacing `16-alpine` with, for example, `17-alpine`.
-Try it, but don't forget that it will download the new image from the internet, if it's not already present on your computer.
+Changing the PostgreSQL version is as simple as replacing `18-alpine` with, for example, `17-alpine`. That's it!
 
-```java save-as=src/test/java/com/example/demo/AbstractIntegrationTest.java
-package com.example.demo;
+1. Change the JDBC property value:
 
-import org.springframework.boot.test.context.SpringBootTest;
+    ```java save-as=src/test/java/com/example/demo/AbstractIntegrationTest.java
+    package com.example.demo;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, properties = {
-        "spring.datasource.url=jdbc:tc:postgresql:17-alpine://testcontainers/workshop"
-})
-public class AbstractIntegrationTest {
+    import org.springframework.boot.test.context.SpringBootTest;
 
-}
-```
+    @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, properties = {
+            "spring.datasource.url=jdbc:tc:postgresql:17-alpine://testcontainers/workshop"
+    })
+    public class AbstractIntegrationTest {
 
-```bash
-./mvnw clean test
-```
+    }
+    ```
+
+2. And run the tests:
+
+    ```bash
+    ./mvnw clean test
+    ```
+
+    You'll see the container image for `postgres:17-alpine` download and then start.

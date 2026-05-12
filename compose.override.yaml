@@ -39,6 +39,7 @@ configs:
         find "/home/coder/project" -type f -name '.*' -exec rm '{}' \;
         git clone https://github.com/testcontainers/workshop.git /home/coder/project
         rm /home/coder/project/step-*.md
+        rm /home/coder/project/SUMMARY.md
       else
         echo "Repository already cloned, skipping."
       fi

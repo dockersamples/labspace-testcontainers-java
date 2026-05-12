@@ -1,58 +1,55 @@
 # Step 5: Hello, r u 200 OK?
 
-One of the great features of Spring Boot is the Actuator and its health endpoint. 
-It gives you an overview how healthy your app is.
+One of the great features of Spring Boot is the Actuator and its health endpoint. With this endpoint, you can quickly get an overview of the health of your app.
 
-The context starts, but what about the health of the app? This endpoint can also be used in a test to quickly validate the application starts up completely.
+While testing, this endpoint can also be used in a test to quickly validate the application starts up completely.
 
 ## Configure Rest Assured
 
-To check the health endpoint of our app, we will use the [RestAssured](http://rest-assured.io/) library.
-
-However, before using it, we first need to configure it. 
+To check the health endpoint of your app while testing, you can use the [RestAssured](http://rest-assured.io/) library.
 
 1. Update your abstract test class with `setUpAbstractIntegrationTest` method since we will share it between all tests:
 
-```java save-as=src/test/java/com/example/demo/AbstractIntegrationTest.java
-package com.example.demo;
+    ```java save-as=src/test/java/com/example/demo/AbstractIntegrationTest.java
+    package com.example.demo;
 
-import io.restassured.RestAssured;
-import io.restassured.builder.RequestSpecBuilder;
-import io.restassured.specification.RequestSpecification;
-import org.junit.jupiter.api.BeforeEach;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.server.LocalServerPort;
-import org.springframework.http.MediaType;
-import org.testcontainers.shaded.com.google.common.net.HttpHeaders;
+    import io.restassured.RestAssured;
+    import io.restassured.builder.RequestSpecBuilder;
+    import io.restassured.specification.RequestSpecification;
+    import org.junit.jupiter.api.BeforeEach;
+    import org.springframework.boot.test.context.SpringBootTest;
+    import org.springframework.boot.test.web.server.LocalServerPort;
+    import org.springframework.http.MediaType;
+    import org.testcontainers.shaded.com.google.common.net.HttpHeaders;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, properties = {
-        "spring.datasource.url=jdbc:tc:postgresql:16-alpine://testcontainers/workshop"
-})
-public class AbstractIntegrationTest {
-    protected RequestSpecification requestSpecification;
+    @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, properties = {
+            "spring.datasource.url=jdbc:tc:postgresql:18-alpine://testcontainers/workshop"
+    })
+    public class AbstractIntegrationTest {
+        protected RequestSpecification requestSpecification;
 
-    @LocalServerPort
-    protected int localServerPort;
+        @LocalServerPort
+        protected int localServerPort;
 
-    @BeforeEach
-    void setUpAbstractIntegrationTest() {
-        RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
-        requestSpecification = new RequestSpecBuilder()
-                .setPort(localServerPort)
-                .addHeader(
-                        HttpHeaders.CONTENT_TYPE,
-                        MediaType.APPLICATION_JSON_VALUE
-                )
-                .build();
+        @BeforeEach
+        void setUpAbstractIntegrationTest() {
+            RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
+            requestSpecification = new RequestSpecBuilder()
+                    .setPort(localServerPort)
+                    .addHeader(
+                            HttpHeaders.CONTENT_TYPE,
+                            MediaType.APPLICATION_JSON_VALUE
+                    )
+                    .build();
+        }
     }
-}
-```
+    ```
 
-Here we ask Spring Boot to inject the random port it received at the start of the app, so that we can pre-configure RestAssured's requestSpecification.
+    The addition of the `@LocalServerPort` annotation will instruct Spring Boot to inject the app's random port, which is loaded into the RestAssured configuration.
 
 ## Call the endpoint
 
-Now let's check if the app is actually healthy.
+You're now ready to check the health of your application!
 
 1. Add the `healthy` test implementation in the `DemoApplicationTest` class:
 
